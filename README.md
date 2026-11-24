@@ -25,6 +25,14 @@
 | ← → , Shift+колесо, Home | Горизонтальная прокрутка |
 | Ctrl+Home / Ctrl+End | Начало / конец файла |
 
+## Скачать
+
+Готовый `rbigviewer.exe` — на странице **Releases** (архив `rbigviewer-win64.zip`)
+или в последнем успешном запуске на вкладке **Actions** (артефакт `rbigviewer-win64`).
+
+Новый релиз: Releases → Draft a new release → тег, например `v0.1.0` → Publish.
+Сборка на GitHub Actions сама прикрепит к нему exe через пару минут.
+
 ## Сборка
 
 ```bash

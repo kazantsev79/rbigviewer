@@ -1,0 +1,38 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # Когда вы публикуете релиз на GitHub, exe автоматически прикрепляется к нему.
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Тесты
+        run: cargo test --release
+      - name: Сборка
+        run: cargo build --release
+      - name: Архив
+        shell: pwsh
+        run: Compress-Archive -Path target/release/rbigviewer.exe -DestinationPath rbigviewer-win64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rbigviewer-win64
+          path: target/release/rbigviewer.exe
+      - name: Прикрепить к релизу
+        if: github.event_name == 'release'
+        shell: bash
+        run: gh release upload "${{ github.event.release.tag_name }}" rbigviewer-win64.zip --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
