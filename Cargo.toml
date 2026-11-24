@@ -1,0 +1,18 @@
+[package]
+name = "rbigviewer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chardetng = "1.0.0"
+eframe = { version = "0.37", default-features = false, features = ["clipboard", "default_fonts", "glow", "wayland", "x11"] }
+encoding_rs = "0.8.44"
+memchr = "2.8.3"
+rfd = "0.18.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
